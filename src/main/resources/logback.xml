@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOGS" value="logs" />
+	<property name="LOGGER_FILE" value="service-log" />
+	
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d %p %C{0} [%t] %m%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="RollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS}/${LOGGER_FILE}.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d %p %C{1} [%t] %m%n</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOGS}/archived/${LOGGER_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+				<maxFileSize>10MB</maxFileSize> 
+				<!-- Logs retention days (not file count) -->  
+				<maxHistory>10</maxHistory>
+				<!-- Total size of archived files -->  
+				<totalSizeCap>100MB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
+
+	<!-- LOG "com.san.jobs" at DEBUG level -->
+	<logger name="com.san.jobs" level="debug" additivity="false">
+		<appender-ref ref="RollingFile" />
+		<appender-ref ref="Console" />
+	</logger>
+
+	<!-- LOG everything at INFO level -->
+	<root level="info">
+		<appender-ref ref="RollingFile" />
+		<appender-ref ref="Console" />
+	</root>
+
+</configuration>
