@@ -4,6 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		String converter = "VideoConverter";
+		converter = "ImageConverter";
 		if (args != null && args.length > 0 && !args[0].isEmpty()) {
 			converter = args[0].trim();
 		}

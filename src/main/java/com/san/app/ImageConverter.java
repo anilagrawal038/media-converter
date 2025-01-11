@@ -153,7 +153,7 @@ public class ImageConverter {
 				MediaConverterConfig mediaConverterConfig = CommonUtil.bindJSONToObject(jsonString, MediaConverterConfig.class);
 				if (mediaConverterConfig != null) {
 					logger.info("Populating config from file : media-converter-config.json");
-					
+
 					if (mediaConverterConfig.getFfmpegPath() != null && !mediaConverterConfig.getFfmpegPath().isEmpty()) {
 						ffmpeg = mediaConverterConfig.getFfmpegPath();
 					}
@@ -186,6 +186,7 @@ public class ImageConverter {
 				logger.info("Unable to read data from file : media-converter-config.json");
 			}
 		} catch (Exception e) {
+			logger.error("Exception occurred while parsing config file", e);
 		}
 		File outPathFolder = new File(outPath);
 		File tempOutPathFolder = new File(tempOutPath);

@@ -1,13 +1,13 @@
 {
-	"sourcePath" : "C:\\Users\\anila\\Desktop\\Test",
-	"outPath" : "C:\\Users\\anila\\Desktop\\TestOut",
-	"tempOutPath" : "C:\\Users\\anila\\Desktop\\TestOutTemp",
-	"ffmpegPath" : "D:\\DBackup\\Softwares\\ffmpeg-20181213-e5a0013-win64-static\\ffmpeg-20181213-e5a0013-win64-static\\bin\\ffmpeg.exe",
+	"sourcePath" : "I:\\WeddingData\\ImageContent\\WeddingData\\Album",
+	"outPath" : "I:\\WeddingData\\ImageContent\\WeddingData\\CompressedAlbum",
+	"tempOutPath" : "I:\\WeddingData\\ImageContent\\WeddingData\\TempAlbum",
+	"ffmpegPath" : "D:\\Softwares\\ffmpeg\\bin\\ffmpeg.exe",
 	"compressionLevel" : 5,
-	"processTimeout" : 3600,
-	"ffprobePath" : "D:\\DBackup\\Softwares\\ffmpeg-20181213-e5a0013-win64-static\\ffmpeg-20181213-e5a0013-win64-static\\bin\\ffprobe.exe",
-	"vlcPath" : "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"",
-	"imgExtensions" : [".jpeg", ".jpg", ".png"],
+	"processTimeout" : 18000,
+	"ffprobePath" : "D:\\Softwares\\ffmpeg\\bin\\ffprobe.exe",
+	"vlcPath" : "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\"",
+	"imgExtensions" : [ ".jpeg", ".jpg", ".png", "JPG", ".JPEG", ".PNG" ],
 	"includeFoldersWithGivenNamesOnly" : [],
 	"excludeFoldersWithGivenNames" : []
 }

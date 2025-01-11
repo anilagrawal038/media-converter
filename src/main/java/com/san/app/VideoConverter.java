@@ -22,6 +22,7 @@ public class VideoConverter {
 	static int processTimeout = 5 * 60; // In Seconds
 
 	static String ffprobe = "D:\\DBackup\\Softwares\\ffmpeg-20181213-e5a0013-win64-static\\ffmpeg-20181213-e5a0013-win64-static\\bin\\ffprobe.exe";
+	static String ffmpeg = "D:\\DBackup\\Softwares\\ffmpeg-20181213-e5a0013-win64-static\\ffmpeg-20181213-e5a0013-win64-static\\bin\\ffmpeg.exe";
 	static String vlc = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"";
 
 	private static String fetchUniqueStringForFile(File file) {
@@ -49,7 +50,7 @@ public class VideoConverter {
 		return command;
 	}
 
-	static String[] fetchConverterCommand(File inFile, File outFile, int height, int width) {
+	static String[] fetchConverterVLCCommand(File inFile, File outFile, int height, int width) {
 		String[] command = new String[] { //
 				vlc, //
 				"-I", //
@@ -57,6 +58,22 @@ public class VideoConverter {
 				"\"file:///" + (inFile.getAbsolutePath().replaceAll("\\\\", "/")) + "\"", //
 				":sout=#transcode{vcodec=h264,vb=2000,venc=x264{profile=baseline},width=" + width + ",height=" + height + ",acodec=mp3,ab=192,channels=2,samplerate=44100,scodec=none}:std{access=file{no-overwrite},mux=mp4,dst='\"" + outFile.getAbsolutePath() + "\"'}", //
 				"vlc://quit"//
+		};
+		return command;
+	}
+
+	static String[] fetchConverterFFMPEGCommand(File inFile, File outFile, int height, int width) {
+		String[] command = new String[] { //
+				ffmpeg, //
+				"-i", //
+				"\"" + (inFile.getAbsolutePath().replaceAll("\\\\", "/")) + "\"", //
+				"-vcodec", //
+				"libx264", //
+				"-acodec", //
+				"mp3", //
+				"-crf", //
+				"28", //
+				"\"" + outFile.getAbsolutePath() + "\"" //
 		};
 		return command;
 	}
@@ -96,12 +113,14 @@ public class VideoConverter {
 			width = 1280;
 			height = 720;
 		}
-		String[] conversionCommand = fetchConverterCommand(inFile, outFile, height, width);
+		// String[] conversionCommand = fetchConverterVLCCommand(inFile, outFile, height, width);
+		String[] conversionCommand = fetchConverterFFMPEGCommand(inFile, outFile, height, width);
 		commandOutput = ProcessHelperUtil.executeCommandWithOutput(String.join(" ", conversionCommand), processTimeout);
 		boolean processCompleted = false;
 		int counter = 0;
 		while (!processCompleted) {
-			Integer pid = ProcessHelperUtil.findAnyRunningProcess("vlc", conversionCommand[3]);
+			// Integer pid = ProcessHelperUtil.findAnyRunningProcess("vlc", conversionCommand[3]);
+			Integer pid = ProcessHelperUtil.findAnyRunningProcess("ffmpeg", conversionCommand[2]);
 			if (pid == null) {
 				// Operation completed
 				break;
@@ -184,6 +203,9 @@ public class VideoConverter {
 				if (mediaConverterConfig != null) {
 					if (mediaConverterConfig.getFfprobePath() != null && !mediaConverterConfig.getFfprobePath().isEmpty()) {
 						ffprobe = mediaConverterConfig.getFfprobePath();
+					}
+					if (mediaConverterConfig.getFfmpegPath() != null && !mediaConverterConfig.getFfmpegPath().isEmpty()) {
+						ffmpeg = mediaConverterConfig.getFfmpegPath();
 					}
 					if (mediaConverterConfig.getVlcPath() != null && !mediaConverterConfig.getVlcPath().isEmpty()) {
 						vlc = mediaConverterConfig.getVlcPath();
